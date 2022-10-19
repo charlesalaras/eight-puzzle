@@ -9,6 +9,7 @@ class Queue {
         Queue(Node* initial);
         std::vector<Node*> data;
         Node* remove_front();
+        bool insert(Node*);
         bool empty() { return data.empty(); }
 };
 

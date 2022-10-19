@@ -5,11 +5,14 @@
 #include "board.h"
 #include "problem.h"
 
-std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Board)>> operators) {
+std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Node*)>> operators) {
     std::vector<Node*> expanded;
     for(auto i: operators) {
-        Node* curr = i(node->state);
-        if(curr != nullptr) expanded.push_back(curr);
+        Node* curr = i(node);
+        if(curr != nullptr) {
+            curr->pathCost = node->pathCost + 1;
+            expanded.push_back(curr);
+        };
     }
     return expanded;
 }

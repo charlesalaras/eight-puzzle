@@ -9,7 +9,7 @@ struct Node {
     Node(int pc, int h);
     Board state;
     int pathCost;
-    int heuristic;
+    int heuristic = 0;
 };
 
 #endif // __NODE_H__
