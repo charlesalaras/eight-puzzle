@@ -9,7 +9,7 @@ class Problem {
     public:
         Board initialState;
         bool goalTest(Board state);
-        std::vector<std::function<void()>> operators;
+        std::vector<std::function<Node*(Board)>> operators;
 };
 
 #endif // __PROBLEM_H__

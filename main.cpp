@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
+#include "board.h"
 
-#define BOARD_DIM 3
 // Defines the search algorithm used
 enum ALGORITHM { UNIFORM, A_STAR_MT, A_STAR_MD };
 
@@ -13,7 +13,7 @@ std::string getInput() {
     return input;
 }
 
-void populateBoard(int board[][BOARD_DIM]) {
+void populateBoard(Board board) {
     for(unsigned int i = 0; i < BOARD_DIM; i++) {
         std::cout << "Enter row " << i + 1 << ":";
         unsigned int j = 0;
@@ -25,7 +25,7 @@ void populateBoard(int board[][BOARD_DIM]) {
 int main () {
 
     ALGORITHM search = UNIFORM;
-    int board[BOARD_DIM][BOARD_DIM] = {
+    int boardData[BOARD_DIM][BOARD_DIM] = {
         { 1, 2, 3, },
         { 5, 0, 6, },
         { 4, 7, 8, },
@@ -46,7 +46,7 @@ int main () {
                 inputLoop = 0;
                 break;
             case 1:
-                populateBoard(board);
+                populateBoard(boardData);
                 inputLoop = 0;
                 break;
             default:
@@ -81,6 +81,7 @@ int main () {
                 continue;
         }
     }
+    Board board(boardData);
     switch(search) {
         case UNIFORM:
 
