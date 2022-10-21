@@ -11,6 +11,12 @@ struct Board {
     std::pair<int, int> zeroTile;
     int data[BOARD_DIM][BOARD_DIM];
     const unsigned int n = BOARD_DIM;
+    Board() {
+        for(int i = 0; i < BOARD_DIM; i++) {
+            for(int j = 0; j < BOARD_DIM; j++) {
+            }
+        }
+    }
     Board(int board[BOARD_DIM][BOARD_DIM]) {
         for(int i = 0; i < BOARD_DIM; i++) {
             for(int j = 0; j < BOARD_DIM; j++) {
