@@ -2,15 +2,25 @@
 #include "node.h"
 #include <vector>
 
-class Queue {
-    public:
-        Queue();
-        ~Queue();
-        Queue(Node* initial);
-        std::vector<Node*> data;
-        Node* remove_front();
-        bool insert(Node*);
-        bool empty() { return data.empty(); }
+struct Queue {
+    std::vector<Node*> data;
+    std::vector<Node*> deletion;
+    Queue();
+    ~Queue() {
+        for(auto state: deletion) delete state;
+    }
+    Queue(Node* initial) {
+        data.push_back(initial);
+    }
+    Node* remove_front() {
+        deletion.push_back(data[0]);
+        return data[0];
+    }
+    bool insert(Node* node) {
+        data.push_back(node);
+        return true;
+    }
+    bool empty() { return data.empty(); }
 };
 
 #endif // __QUEUE_H__

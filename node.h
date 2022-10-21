@@ -5,7 +5,7 @@
 
 struct Node {
     Node();
-    Node(Board);
+    Node(Board state): state(state) {}
     Node(int pc, int h);
     Board state;
     int pathCost;
