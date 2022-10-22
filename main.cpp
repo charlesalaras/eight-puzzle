@@ -1,6 +1,8 @@
 #include <iostream>
 #include <sstream>
 #include "board.h"
+#include "search.h"
+#include "problem.h"
 
 // Defines the search algorithm used
 enum ALGORITHM { UNIFORM, A_STAR_MT, A_STAR_MD };
@@ -82,16 +84,20 @@ int main () {
         }
     }
     Board board(boardData);
+    Problem problem(board);
+    Node* solution = nullptr;
+    std::function<Queue(Queue&, std::vector<Node*>)> queueingFunction;
     switch(search) {
         case UNIFORM:
-
+            queueingFunction = &uniformCost;
             break;
         case A_STAR_MT:
-
+            queueingFunction = &misplacedTile;
             break;
         case A_STAR_MD:
-
+            queueingFunction = &manhattanDist;
             break;
     }
+    solution = generalSearch(problem, {});
     return 0;
 } 

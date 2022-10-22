@@ -12,8 +12,13 @@ struct Board {
     int data[BOARD_DIM][BOARD_DIM];
     const unsigned int n = BOARD_DIM;
     Board() {
-        for(int i = 0; i < BOARD_DIM; i++) {
-            for(int j = 0; j < BOARD_DIM; j++) {
+        int seen[BOARD_DIM] = { 0 };
+        for(unsigned int i = 0; i < BOARD_DIM; i++) {
+            for(unsigned int j = 0; j < BOARD_DIM; j++) {
+                int insert = rand() % BOARD_DIM;
+                while(seen[insert] == 1) insert = rand() % BOARD_DIM;
+                data[i][j] = rand() % BOARD_DIM;
+                seen[insert]++;
             }
         }
     }

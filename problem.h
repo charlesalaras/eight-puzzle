@@ -5,10 +5,21 @@
 #include "board.h"
 #include "node.h"
 
+/* Defined in search.cpp */
+Node* slideLeft(Node*);
+Node* slideRight(Node*);
+Node* slideUp(Node*);
+Node* slideDown(Node*);
+
 struct Problem {
     Problem(Board state): initialState(state) {}
     Board initialState;
-    std::vector<std::function<Node*(Node*)>> operators;
+    std::vector<std::function<Node*(Node*)>> operators = {
+        slideLeft,
+        slideRight,
+        slideUp,
+        slideDown
+    };
     bool goalTest(Board state) {
         int count = 1;
         for(int i = 0; i < state.n; i++) {

@@ -8,7 +8,7 @@ struct Node {
     Node(Board state): state(state) {}
     Node(int pc, int h): pathCost(pc), heuristic(h) {}
     Board state;
-    int pathCost;
+    int pathCost = 0;
     int heuristic = 0;
 };
 
