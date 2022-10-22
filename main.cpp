@@ -98,6 +98,6 @@ int main () {
             queueingFunction = &manhattanDist;
             break;
     }
-    solution = generalSearch(problem, {});
+    solution = generalSearch(problem, queueingFunction);
     return 0;
 } 

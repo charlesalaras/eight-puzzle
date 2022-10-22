@@ -12,7 +12,7 @@
 
 std::vector<Node*> expand(Node*, std::vector<std::function<Node*(Node*)>>);
 
-Node* generalSearch(Problem, std::function<Queue(Queue, std::vector<Node*>)>);
+Node* generalSearch(Problem, std::function<Queue(Queue&, std::vector<Node*>)>);
 
 Queue uniformCost(Queue&, std::vector<Node*>);
 
