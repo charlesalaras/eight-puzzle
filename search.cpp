@@ -36,8 +36,8 @@ Queue misplacedTile(Queue& q, std::vector<Node*> expanded) {
         // Evaluate the current node
         int currHeuristic = 0;
         int count = 1;
-        for(int i = 0; i < node->state.n; i++) {
-            for(int j = 0; j < node->state.n; j++) {
+        for(unsigned int i = 0; i < node->state.n; i++) {
+            for(unsigned int j = 0; j < node->state.n; j++) {
                 if(i == node->state.n - 1 && j == node->state.n - 1) count = 0;
                 if(node->state.data[i][j] != count) currHeuristic++;
                 count++;
@@ -55,8 +55,8 @@ Queue manhattanDist(Queue& q, std::vector<Node*> expanded) {
         // Evaluate the current node
         int currHeuristic = 0;
         int count = 1;
-        for(int i = 0; i < node->state.n; i++) {
-            for(int j = 0; j < node->state.n; j++) {
+        for(unsigned int i = 0; i < node->state.n; i++) {
+            for(unsigned int j = 0; j < node->state.n; j++) {
                 if(i == node->state.n - 1 && j == node->state.n - 1) count = 0;
                 if(node->state.data[i][j] != count) {
                     std::pair<int,int> truePos = {(count - 1) / node->state.n, (count - 1) % node->state.n};

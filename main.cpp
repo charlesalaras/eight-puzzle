@@ -15,13 +15,14 @@ std::string getInput() {
     return input;
 }
 
-void populateBoard(Board board) {
+bool populateBoard(Board board) {
     for(unsigned int i = 0; i < BOARD_DIM; i++) {
         std::cout << "Enter row " << i + 1 << ":";
         unsigned int j = 0;
         std::stringstream ss;
         
     }
+    return true;
 }
 
 int main () {
@@ -29,8 +30,8 @@ int main () {
     ALGORITHM search = UNIFORM;
     int boardData[BOARD_DIM][BOARD_DIM] = {
         { 1, 2, 3, },
-        { 5, 0, 6, },
-        { 4, 7, 8, },
+        { 4, 5, 6, },
+        { 0, 7, 8, },
     };
 
     std::cout << "8 Puzzle Solver - Charles Alaras 2022\n" << std::endl;
@@ -48,8 +49,7 @@ int main () {
                 inputLoop = 0;
                 break;
             case 1:
-                populateBoard(boardData);
-                inputLoop = 0;
+                inputLoop = !populateBoard(boardData);
                 break;
             default:
                 std::cout << "Error: Invalid choice.\n" << std::endl;
@@ -99,5 +99,6 @@ int main () {
             break;
     }
     solution = generalSearch(problem, queueingFunction);
+    solution->state.print();
     return 0;
 } 

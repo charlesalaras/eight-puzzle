@@ -22,8 +22,8 @@ struct Problem {
     };
     bool goalTest(Board state) {
         int count = 1;
-        for(int i = 0; i < state.n; i++) {
-            for(int j = 0; j < state.n; j++) {
+        for(unsigned int i = 0; i < state.n; i++) {
+            for(unsigned int j = 0; j < state.n; j++) {
                 if(i == state.n - 1 && j == state.n - 1) count = 0;
                 if(state.data[i][j] != count) {
                     return false;
