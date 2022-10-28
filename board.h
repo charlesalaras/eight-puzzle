@@ -34,15 +34,20 @@ struct Board {
         }
     };
     void print() {
-        std::cout << "[ ";
+        std::string output = "[ ";
         for(int i = 0; i < BOARD_DIM; i++) {
-            std::cout << "[ ";
-            for(int j = 0; j < BOARD_DIM; j++) {
-                std::cout << data[i][j] << " ";
+            if(i != 0) {
+                output += "  ";
             }
-            std::cout << "]\n";
+            output += "[ ";
+            for(int j = 0; j < BOARD_DIM; j++) {
+                output += std::to_string(data[i][j]) + " ";
+            }
+            output += "]\n";
         }
-        std::cout << "] " << std::endl;
+        output.at(output.size() - 1) = ' ';
+        output += "]";
+        std::cout << output << std::endl;
     }
 };
 

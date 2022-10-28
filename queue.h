@@ -1,5 +1,6 @@
 #ifndef __QUEUE_H__
 #include "node.h"
+#include <algorithm>
 #include <vector>
 #include <queue>
 
@@ -8,14 +9,17 @@ class Compare {
     bool operator() (const Node* lhs, const Node* rhs) const {
         int left = lhs->heuristic + lhs->pathCost;
         int right = rhs->heuristic + rhs->pathCost;
-        return left < right;
+        return left > right;
     }
 };
 
 struct Queue {
     std::priority_queue<Node*, std::vector<Node*>, Compare> data;
     std::vector<Node*> deletion;
+    long int expanded;
+    long int maxSize = 0;
     Queue();
+    /*
     ~Queue() {
         for(auto state: deletion) delete state;
         while(!data.empty()) {
@@ -23,6 +27,7 @@ struct Queue {
             data.pop();
         }
     }
+    */
     Queue(Node* initial) {
         data.push(initial);
     }
@@ -33,6 +38,8 @@ struct Queue {
         return returnData;
     }
     bool insert(Node* node) {
+        expanded++;
+        maxSize = std::max(maxSize, (long int)data.size());
         data.push(node);
         return true;
     }

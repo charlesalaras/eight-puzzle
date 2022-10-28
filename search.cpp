@@ -18,6 +18,8 @@ Node* generalSearch(Problem problem, std::function<Queue(Queue&, std::vector<Nod
     while(1) {
         if(nodes.empty()) return nullptr;
         Node* node = nodes.remove_front();
+        std::cout << "The best state to expand with g(n) = " << node->pathCost << " and " << "h(n) = " << node->heuristic << " is...\n";
+        node->state.print();
         if(problem.goalTest(node->state)) return node;
         nodes = queueingFunction(nodes, expand(node, problem.operators));
     }
@@ -60,7 +62,10 @@ Queue manhattanDist(Queue& q, std::vector<Node*> expanded) {
                 if(i == node->state.n - 1 && j == node->state.n - 1) count = 0;
                 if(node->state.data[i][j] != count) {
                     std::pair<int,int> truePos = {(count - 1) / node->state.n, (count - 1) % node->state.n};
-                    currHeuristic += (abs(truePos.first - i) + abs(truePos.second - j));
+                    //FIXME: This doesn't calculate correctly!
+                    int addedValue = (truePos.first - i) + (truePos.second - j);
+                    std::cout << addedValue << "\n";
+                    currHeuristic += addedValue;
                 }
                 count++;
             }
@@ -79,6 +84,7 @@ Node* slideLeft(Node* parent) {
     int temp = parent->state.data[i][j - 1];
     child->state.data[i][j - 1] = 0;
     child->state.data[i][j] = temp;
+    child->state.zeroTile = {i, j - 1};
     return child;
 }
 
@@ -90,6 +96,7 @@ Node* slideRight(Node* parent) {
     int temp = parent->state.data[i][j + 1];
     child->state.data[i][j + 1] = 0;
     child->state.data[i][j] = temp;
+    child->state.zeroTile = {i, j + 1};
     return child;
 }
 
@@ -101,6 +108,7 @@ Node* slideUp(Node* parent) {
     int temp = parent->state.data[i - 1][j];
     child->state.data[i - 1][j] = 0;
     child->state.data[i][j] = temp;
+    child->state.zeroTile = {i - 1, j};
     return child;
 }
 
@@ -112,5 +120,6 @@ Node* slideDown(Node* parent) {
     int temp = parent->state.data[i + 1][j];
     child->state.data[i + 1][j] = 0;
     child->state.data[i][j] = temp;
+    child->state.zeroTile = {i + 1, j};
     return child;
 }

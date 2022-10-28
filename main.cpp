@@ -15,14 +15,19 @@ std::string getInput() {
     return input;
 }
 
-bool populateBoard(Board board) {
-    for(unsigned int i = 0; i < BOARD_DIM; i++) {
-        std::cout << "Enter row " << i + 1 << ":";
-        unsigned int j = 0;
+void populateBoard(int board[BOARD_DIM][BOARD_DIM]) {
+    unsigned int j = 0;
+    while(j < (BOARD_DIM * BOARD_DIM)) {
+        if(j % BOARD_DIM == 0) std::cout << "Enter row " << (j / BOARD_DIM) + 1 << ":\n";
         std::stringstream ss;
-        
+        std::string input = getInput();
+        ss.str(input);
+        std::string curr;
+        while(ss >> curr) {
+            board[j / BOARD_DIM][j % BOARD_DIM] = std::stoi(curr);
+            j++;
+        }
     }
-    return true;
 }
 
 int main () {
@@ -49,7 +54,8 @@ int main () {
                 inputLoop = 0;
                 break;
             case 1:
-                inputLoop = !populateBoard(boardData);
+                populateBoard(boardData);
+                inputLoop = 0;
                 break;
             default:
                 std::cout << "Error: Invalid choice.\n" << std::endl;
@@ -99,6 +105,11 @@ int main () {
             break;
     }
     solution = generalSearch(problem, queueingFunction);
-    solution->state.print();
+    if(solution != nullptr) {
+        std::cout << "Goal state!" << std::endl;
+        solution->state.print();
+        //std::cout << "Number of nodes expanded: " << nodes.expanded << std::endl;
+        //std::cout << "Max queue size: " << nodes.maxSize << std::endl;
+    }
     return 0;
 } 
