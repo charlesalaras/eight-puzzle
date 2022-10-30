@@ -16,9 +16,9 @@ class Compare {
 struct Queue {
     std::priority_queue<Node*, std::vector<Node*>, Compare> data;
     std::vector<Node*> deletion;
-    long int expanded;
+    long int expanded = 0;
     long int maxSize = 0;
-    Queue();
+    Queue() = default;
     /*
     ~Queue() {
         for(auto state: deletion) delete state;

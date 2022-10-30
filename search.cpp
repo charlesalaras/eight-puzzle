@@ -1,7 +1,11 @@
 #include "search.h"
 
+Queue nodes;
+
 // Helper function to expand nodes during search
 std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Node*)>> operators) {
+    std::cout << "The best state to expand with g(n) = " << node->pathCost << " and " << "h(n) = " << node->heuristic << " is...\n";
+    node->state.print();
     std::vector<Node*> expanded;
     for(auto i: operators) {
         Node* curr = i(node);
@@ -14,12 +18,10 @@ std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Node*)>> o
 }
 // The general search algorithm as described in lecture slides
 Node* generalSearch(Problem problem, std::function<Queue(Queue&, std::vector<Node*>)>queueingFunction) {
-    Queue nodes = Queue(new Node(problem.initialState));
+    nodes = Queue(new Node(problem.initialState));
     while(1) {
         if(nodes.empty()) return nullptr;
         Node* node = nodes.remove_front();
-        std::cout << "The best state to expand with g(n) = " << node->pathCost << " and " << "h(n) = " << node->heuristic << " is...\n";
-        node->state.print();
         if(problem.goalTest(node->state)) return node;
         nodes = queueingFunction(nodes, expand(node, problem.operators));
     }
@@ -63,9 +65,12 @@ Queue manhattanDist(Queue& q, std::vector<Node*> expanded) {
                 if(node->state.data[i][j] != count) {
                     std::pair<int,int> truePos = {(count - 1) / node->state.n, (count - 1) % node->state.n};
                     //FIXME: This doesn't calculate correctly!
+                    std::cout << truePos.first << " and " << truePos.second << std::endl;
+                    /*
                     int addedValue = (truePos.first - i) + (truePos.second - j);
                     std::cout << addedValue << "\n";
                     currHeuristic += addedValue;
+                    */
                 }
                 count++;
             }

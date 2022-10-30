@@ -1,17 +1,20 @@
 #include <iostream>
 #include <sstream>
+#include <string>
 #include "board.h"
 #include "search.h"
 #include "problem.h"
 
+extern Queue nodes;
 // Defines the search algorithm used
 enum ALGORITHM { UNIFORM, A_STAR_MT, A_STAR_MD };
 
 // Gets input from user
-std::string getInput() {
-    std::string input;
+char getInput() {
+    char input;
     std::cout << "> ";
     std::cin >> input;
+    std::cin.ignore(256, '\n');
     return input;
 }
 
@@ -20,7 +23,8 @@ void populateBoard(int board[BOARD_DIM][BOARD_DIM]) {
     while(j < (BOARD_DIM * BOARD_DIM)) {
         if(j % BOARD_DIM == 0) std::cout << "Enter row " << (j / BOARD_DIM) + 1 << ":\n";
         std::stringstream ss;
-        std::string input = getInput();
+        std::string input;
+        std::getline(std::cin, input);
         ss.str(input);
         std::string curr;
         while(ss >> curr) {
@@ -46,14 +50,14 @@ int main () {
                      "(0) Default Puzzle\n"
                      "(1) Custom Puzzle" << std::endl;
 
-        int userInput = std::stoi(getInput());
+        char userInput = getInput();
 
         switch(userInput) {
-            case 0:
+            case '0':
                 // Use default
                 inputLoop = 0;
                 break;
-            case 1:
+            case '1':
                 populateBoard(boardData);
                 inputLoop = 0;
                 break;
@@ -69,18 +73,18 @@ int main () {
                      "(0) Uniform Cost Search\n"
                      "(1) A-Star with Misplaced Tile Heuristic\n"
                      "(2) A-Star with Manhattan Heuristic" << std::endl;
-        int userInput = std::stoi(getInput());
+        char userInput = getInput();
 
         switch(userInput) {
-            case 0:
+            case '0':
                 search = UNIFORM;
                 inputLoop = !inputLoop;
                 break;
-            case 1:
+            case '1':
                 search = A_STAR_MT;
                 inputLoop = !inputLoop;
                 break;
-            case 2:
+            case '2':
                 search = A_STAR_MD;
                 inputLoop = !inputLoop;
                 break;
@@ -108,8 +112,8 @@ int main () {
     if(solution != nullptr) {
         std::cout << "Goal state!" << std::endl;
         solution->state.print();
-        //std::cout << "Number of nodes expanded: " << nodes.expanded << std::endl;
-        //std::cout << "Max queue size: " << nodes.maxSize << std::endl;
+        std::cout << "Number of nodes expanded: " << nodes.expanded << std::endl;
+        std::cout << "Max queue size: " << nodes.maxSize << std::endl;
     }
     return 0;
 } 
