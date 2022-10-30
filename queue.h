@@ -1,5 +1,7 @@
 #ifndef __QUEUE_H__
+#include "board.h"
 #include "node.h"
+#include <unordered_set>
 #include <algorithm>
 #include <vector>
 #include <queue>
@@ -15,25 +17,20 @@ class Compare {
 
 struct Queue {
     std::priority_queue<Node*, std::vector<Node*>, Compare> data;
-    std::vector<Node*> deletion;
     long int expanded = 0;
     long int maxSize = 0;
     Queue() = default;
-    /*
-    ~Queue() {
-        for(auto state: deletion) delete state;
+    void clear() {
         while(!data.empty()) {
             delete data.top();
             data.pop();
         }
     }
-    */
     Queue(Node* initial) {
         data.push(initial);
     }
     Node* remove_front() {
         Node* returnData = data.top();
-        deletion.push_back(returnData);
         data.pop();
         return returnData;
     }

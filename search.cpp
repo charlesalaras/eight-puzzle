@@ -14,6 +14,7 @@ std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Node*)>> o
             expanded.push_back(curr);
         };
     }
+    delete node;
     return expanded;
 }
 // The general search algorithm as described in lecture slides
@@ -61,16 +62,12 @@ Queue manhattanDist(Queue& q, std::vector<Node*> expanded) {
         int count = 1;
         for(unsigned int i = 0; i < node->state.n; i++) {
             for(unsigned int j = 0; j < node->state.n; j++) {
-                if(i == node->state.n - 1 && j == node->state.n - 1) count = 0;
+                if(i == node->state.n - 1 && j == node->state.n - 1) count = 1;
                 if(node->state.data[i][j] != count) {
                     std::pair<int,int> truePos = {(count - 1) / node->state.n, (count - 1) % node->state.n};
                     //FIXME: This doesn't calculate correctly!
-                    std::cout << truePos.first << " and " << truePos.second << std::endl;
-                    /*
-                    int addedValue = (truePos.first - i) + (truePos.second - j);
-                    std::cout << addedValue << "\n";
+                    int addedValue = abs(truePos.first - (int)i) + abs(truePos.second - (int)j);
                     currHeuristic += addedValue;
-                    */
                 }
                 count++;
             }

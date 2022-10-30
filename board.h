@@ -9,7 +9,7 @@
 
 struct Board {
     std::pair<unsigned int, unsigned int> zeroTile;
-    int data[BOARD_DIM][BOARD_DIM];
+    int data[BOARD_DIM][BOARD_DIM] = { 0 };
     const unsigned int n = BOARD_DIM;
     Board() {
         int seen[BOARD_DIM] = { 0 };
