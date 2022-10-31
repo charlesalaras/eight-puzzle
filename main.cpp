@@ -114,9 +114,9 @@ int main () {
         std::cout << "Solution depth was " << solution->pathCost << std::endl;
         std::cout << "Number of nodes expanded: " << nodes.expanded << std::endl;
         std::cout << "Max queue size: " << nodes.maxSize << std::endl;
+        delete solution;
     }
     // Program is finished, do final cleanup of queue and nodes
-    if(solution != nullptr) delete solution;
     nodes.clear();
     return 0;
 } 

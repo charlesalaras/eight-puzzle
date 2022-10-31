@@ -10,11 +10,15 @@ std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Node*)>> o
     std::vector<Node*> expanded;
     for(auto i: operators) {
         Node* curr = i(node);
-        // FIXME: Doesn't work
-        if(curr != nullptr && !nodes.seen(curr)) {
-            curr->pathCost = node->pathCost + 1;
-            expanded.push_back(curr);
-        };
+        if(curr != nullptr) {
+            if(!nodes.seen(curr)) {
+                curr->pathCost = node->pathCost + 1;
+                expanded.push_back(curr);
+            }
+            else {
+                delete curr;
+            }
+        }
     }
     delete node;
     return expanded;
@@ -34,7 +38,6 @@ Node* generalSearch(Problem problem, std::function<Queue(Queue&, std::vector<Nod
 Queue uniformCost(Queue& q, std::vector<Node*> expanded) {
     // No heuristics
     for(auto node: expanded) q.insert(node);
-    std::cout << q.maxSize << std:: endl;
     return q;
 }
 // Queueing function for A* with misplaced tile heuristic
@@ -43,13 +46,13 @@ Queue misplacedTile(Queue& q, std::vector<Node*> expanded) {
     for(auto node: expanded) {
         // Evaluate the current node
         int currHeuristic = 0;
-        int count = 1;
+        int count = 0;
         for(unsigned int i = 0; i < BOARD_DIM; i++) {
             for(unsigned int j = 0; j < BOARD_DIM; j++) {
-                if(node->state.data[i][j] == 0) break;
+                count++;
+                if(node->state.data[i][j] == 0) continue;
                 if(i == BOARD_DIM - 1 && j == BOARD_DIM - 1) count = 0;
                 if(node->state.data[i][j] != count) currHeuristic++;
-                count++;
             }
         }
         node->heuristic = currHeuristic;
@@ -63,11 +66,17 @@ Queue manhattanDist(Queue& q, std::vector<Node*> expanded) {
     for(auto node: expanded) {
         // Evaluate the current node
         int currHeuristic = 0;
-        int count = 1;
+        int count = 0;
         for(unsigned int i = 0; i < BOARD_DIM; i++) {
             for(unsigned int j = 0; j < BOARD_DIM; j++) {
-                
-                
+                count++;
+                if(node->state.data[i][j] == 0) continue;
+                if(i == BOARD_DIM - 1 && j == BOARD_DIM - 1) count = 0;
+                std::pair<int, int> truePos = {(node->state.data[i][j] - 1) / BOARD_DIM, (node->state.data[i][j] - 1) % BOARD_DIM};
+                if(node->state.data[i][j] != count) {
+                    int addedValue = abs(truePos.first - (int)i) + abs(truePos.second - (int)j);
+                    currHeuristic += addedValue;
+                }
             }
         }
         node->heuristic = currHeuristic;
