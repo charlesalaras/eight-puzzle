@@ -10,7 +10,6 @@
 struct Board {
     std::pair<unsigned int, unsigned int> zeroTile;
     int data[BOARD_DIM][BOARD_DIM] = { 0 };
-    const unsigned int n = BOARD_DIM;
     Board() {
         int seen[BOARD_DIM] = { 0 };
         for(unsigned int i = 0; i < BOARD_DIM; i++) {
@@ -34,20 +33,15 @@ struct Board {
         }
     };
     void print() {
-        std::string output = "[ ";
+        std::string output = "";
         for(int i = 0; i < BOARD_DIM; i++) {
-            if(i != 0) {
-                output += "  ";
-            }
             output += "[ ";
             for(int j = 0; j < BOARD_DIM; j++) {
                 output += std::to_string(data[i][j]) + " ";
             }
             output += "]\n";
         }
-        output.at(output.size() - 1) = ' ';
-        output += "]";
-        std::cout << output << std::endl;
+        std::cout << output;
     }
     std::string stringify() {
         std::string output = "";

@@ -22,9 +22,9 @@ struct Problem {
     };
     bool goalTest(Board state) {
         int count = 1;
-        for(unsigned int i = 0; i < state.n; i++) {
-            for(unsigned int j = 0; j < state.n; j++) {
-                if(i == state.n - 1 && j == state.n - 1) count = 0;
+        for(unsigned int i = 0; i < BOARD_DIM; i++) {
+            for(unsigned int j = 0; j < BOARD_DIM; j++) {
+                if(i == BOARD_DIM - 1 && j == BOARD_DIM - 1) count = 0;
                 if(state.data[i][j] != count) {
                     return false;
                 }

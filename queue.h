@@ -35,10 +35,14 @@ struct Queue {
         data.pop();
         return returnData;
     }
+    // Returns false is node hasn't been seen (inserted successfully), true otherwise.
+    bool seen(Node* node) {
+        return !hashMap.insert(node->state.stringify()).second;
+    }
+    // Inserts the node and updates max queue size if necessary.
     bool insert(Node* node) {
-        expanded++;
-        maxSize = std::max(maxSize, (long int)data.size());
         data.push(node);
+        maxSize = std::max(maxSize, (long int)data.size());
         return true;
     }
     bool empty() { return data.empty(); }

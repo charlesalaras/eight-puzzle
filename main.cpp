@@ -110,13 +110,10 @@ int main () {
     }
     solution = generalSearch(problem, queueingFunction);
     if(solution != nullptr) {
-        std::cout << "Goal state!" << std::endl;
-        solution->state.print();
+        std::cout << "Goal state!\n" << std::endl;
+        std::cout << "Solution depth was " << solution->pathCost << std::endl;
         std::cout << "Number of nodes expanded: " << nodes.expanded << std::endl;
         std::cout << "Max queue size: " << nodes.maxSize << std::endl;
-    }
-    else {
-        std::cout << "No solution found!" << std::endl;
     }
     // Program is finished, do final cleanup of queue and nodes
     if(solution != nullptr) delete solution;
