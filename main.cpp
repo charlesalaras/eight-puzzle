@@ -115,6 +115,9 @@ int main () {
         std::cout << "Number of nodes expanded: " << nodes.expanded << std::endl;
         std::cout << "Max queue size: " << nodes.maxSize << std::endl;
     }
+    else {
+        std::cout << "No solution found!" << std::endl;
+    }
     // Program is finished, do final cleanup of queue and nodes
     if(solution != nullptr) delete solution;
     nodes.clear();

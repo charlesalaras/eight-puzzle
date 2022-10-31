@@ -9,7 +9,8 @@ std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Node*)>> o
     std::vector<Node*> expanded;
     for(auto i: operators) {
         Node* curr = i(node);
-        if(curr != nullptr) {
+        // FIXME: Doesn't work
+        if(curr != nullptr && nodes.hashMap.insert(curr->state.stringify()).second) {
             curr->pathCost = node->pathCost + 1;
             expanded.push_back(curr);
         };

@@ -17,6 +17,7 @@ class Compare {
 
 struct Queue {
     std::priority_queue<Node*, std::vector<Node*>, Compare> data;
+    std::unordered_set<std::string> hashMap = {};
     long int expanded = 0;
     long int maxSize = 0;
     Queue() = default;

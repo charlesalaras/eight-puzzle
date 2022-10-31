@@ -49,6 +49,15 @@ struct Board {
         output += "]";
         std::cout << output << std::endl;
     }
+    std::string stringify() {
+        std::string output = "";
+        for(int i = 0; i < BOARD_DIM; i++) {
+            for(int j = 0; j < BOARD_DIM; j++) {
+                output += std::to_string(data[i][j]);
+            }
+        }
+        return output;
+    }
 };
 
 #endif // __BOARD_H__
