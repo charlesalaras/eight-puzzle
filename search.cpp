@@ -2,7 +2,7 @@
 
 Queue nodes;
 
-// Helper function to expand nodes during search
+// Helper function to call all operators, and enqueue them if valid (non repeated / possible move)
 std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Node*)>> operators) {
     nodes.expanded += 1;
     std::cout << "The best state to expand with g(n) = " << node->pathCost << " and " << "h(n) = " << node->heuristic << " is...\n";
@@ -83,8 +83,11 @@ Queue manhattanDist(Queue& q, std::vector<Node*> expanded) {
         q.insert(node);
     }
     return q;
-}
-/* PROBLEM OPERATORS */
+} 
+// PROBLEM OPERATORS
+// 1. Check if move is possible
+// 2. Grab indices of movement
+// 3. Perform swap
 Node* slideLeft(Node* parent) {
     if(parent->state.zeroTile.second == 0) return nullptr;
     Node* child = new Node(parent->state);

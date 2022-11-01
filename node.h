@@ -4,7 +4,7 @@
 #include "board.h"
 
 struct Node {
-    Node();
+    Node() = default;
     Node(Board state): state(state) {}
     Node(int pc, int h): pathCost(pc), heuristic(h) {}
     Board state;

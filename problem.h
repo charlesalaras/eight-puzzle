@@ -5,7 +5,7 @@
 #include "board.h"
 #include "node.h"
 
-/* Defined in search.cpp */
+/* Operators defined in search.cpp */
 Node* slideLeft(Node*);
 Node* slideRight(Node*);
 Node* slideUp(Node*);
@@ -20,6 +20,7 @@ struct Problem {
         slideUp,
         slideDown
     };
+    // Tests a given board to see if its the goal
     bool goalTest(Board state) {
         int count = 1;
         for(unsigned int i = 0; i < BOARD_DIM; i++) {

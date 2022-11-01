@@ -1,7 +1,7 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
 
-#define BOARD_DIM 3
+#define BOARD_DIM 3 // Change this compiler variable for n-sized puzzles
 
 #include <iostream>
 #include <utility>
@@ -10,18 +10,7 @@
 struct Board {
     std::pair<unsigned int, unsigned int> zeroTile;
     int data[BOARD_DIM][BOARD_DIM] = { 0 };
-    Board() {
-        int seen[BOARD_DIM] = { 0 };
-        for(unsigned int i = 0; i < BOARD_DIM; i++) {
-            for(unsigned int j = 0; j < BOARD_DIM; j++) {
-                int insert = rand() % BOARD_DIM;
-                while(seen[insert] == 1) insert = rand() % BOARD_DIM;
-                if(insert == 0) zeroTile = {i , j};
-                data[i][j] = rand() % BOARD_DIM;
-                seen[insert]++;
-            }
-        }
-    }
+    Board() = default;
     Board(int board[BOARD_DIM][BOARD_DIM]) {
         for(int i = 0; i < BOARD_DIM; i++) {
             for(int j = 0; j < BOARD_DIM; j++) {
@@ -43,6 +32,7 @@ struct Board {
         }
         std::cout << output;
     }
+    // Convert board into a string for insertion into hashmap
     std::string stringify() {
         std::string output = "";
         for(int i = 0; i < BOARD_DIM; i++) {

@@ -17,10 +17,13 @@ class Compare {
 
 struct Queue {
     std::priority_queue<Node*, std::vector<Node*>, Compare> data;
+    // Stores repeated states
     std::unordered_set<std::string> hashMap = {};
     long int expanded = 0;
+    // Stores maximum number of nodes in queue
     long int maxSize = 0;
     Queue() = default;
+    // Called at end of search to delete remaining leaking memory
     void clear() {
         while(!data.empty()) {
             delete data.top();
@@ -35,7 +38,7 @@ struct Queue {
         data.pop();
         return returnData;
     }
-    // Returns false is node hasn't been seen (inserted successfully), true otherwise.
+    // Returns false if node hasn't been seen (inserted successfully), true otherwise.
     bool seen(Node* node) {
         return !hashMap.insert(node->state.stringify()).second;
     }

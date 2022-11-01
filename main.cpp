@@ -1,6 +1,8 @@
+#include <bits/chrono.h>
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <chrono>
 #include "board.h"
 #include "search.h"
 #include "problem.h"
@@ -18,6 +20,7 @@ char getInput() {
     return input;
 }
 
+// Prompt and grab user input
 void populateBoard(int board[BOARD_DIM][BOARD_DIM]) {
     unsigned int j = 0;
     while(j < (BOARD_DIM * BOARD_DIM)) {
@@ -34,17 +37,18 @@ void populateBoard(int board[BOARD_DIM][BOARD_DIM]) {
     }
 }
 
-int main () {
+int main (int argc, char* argv[]) {
 
     ALGORITHM search = UNIFORM;
     int boardData[BOARD_DIM][BOARD_DIM] = {
         { 1, 2, 3, },
-        { 4, 5, 6, },
-        { 0, 7, 8, },
+        { 5, 0, 6, },
+        { 4, 7, 8, },
     };
 
     std::cout << "8 Puzzle Solver - Charles Alaras 2022\n" << std::endl;
     bool inputLoop = true;
+    // Until a valid option is made, choose between default configuration or a custom configuration
     while(inputLoop) {
         std::cout << "Select an initial state:\n"
                      "(0) Default Puzzle\n"
@@ -68,6 +72,7 @@ int main () {
     }
     std::cout << std::endl;
     inputLoop = true;
+    // Until a valid option is made, choose a search algorithm
     while(inputLoop) {
         std::cout << "Choose a search algorithm:\n"
                      "(0) Uniform Cost Search\n"
@@ -108,7 +113,18 @@ int main () {
             queueingFunction = &manhattanDist;
             break;
     }
+    // Timer starts here (if flag "-t" is passed)
+    std::chrono::steady_clock::time_point t1;
+    if(argc > 1 && std::string(argv[1]) == "-t") t1 = std::chrono::steady_clock::now();
+
     solution = generalSearch(problem, queueingFunction);
+
+    // Timer ends here and prints out duration (if flag "-t" is passed)
+    if(argc >1 && std::string(argv[1]) == "-t") {
+        auto t2 = std::chrono::steady_clock::now();
+        std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
+        std::cout << "Runtime duration: " << time_span.count() << std::endl;
+    }
     if(solution != nullptr) {
         std::cout << "Goal state!\n" << std::endl;
         std::cout << "Solution depth was " << solution->pathCost << std::endl;
@@ -116,7 +132,7 @@ int main () {
         std::cout << "Max queue size: " << nodes.maxSize << std::endl;
         delete solution;
     }
-    // Program is finished, do final cleanup of queue and nodes
+    // Do final cleanup of queue and nodes
     nodes.clear();
     return 0;
 } 
