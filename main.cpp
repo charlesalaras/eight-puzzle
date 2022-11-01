@@ -8,6 +8,7 @@
 #include "problem.h"
 
 extern Queue nodes;
+bool DEBUG = false;
 // Defines the search algorithm used
 enum ALGORITHM { UNIFORM, A_STAR_MT, A_STAR_MD };
 
@@ -38,6 +39,8 @@ void populateBoard(int board[BOARD_DIM][BOARD_DIM]) {
 }
 
 int main (int argc, char* argv[]) {
+
+    if(argc > 1 && std::string(argv[1]) == "-t") DEBUG = true;
 
     ALGORITHM search = UNIFORM;
     int boardData[BOARD_DIM][BOARD_DIM] = {
@@ -115,12 +118,12 @@ int main (int argc, char* argv[]) {
     }
     // Timer starts here (if flag "-t" is passed)
     std::chrono::steady_clock::time_point t1;
-    if(argc > 1 && std::string(argv[1]) == "-t") t1 = std::chrono::steady_clock::now();
+    if(DEBUG) t1 = std::chrono::steady_clock::now();
 
     solution = generalSearch(problem, queueingFunction);
 
     // Timer ends here and prints out duration (if flag "-t" is passed)
-    if(argc >1 && std::string(argv[1]) == "-t") {
+    if(DEBUG) {
         auto t2 = std::chrono::steady_clock::now();
         std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
         std::cout << "Runtime duration: " << time_span.count() << std::endl;

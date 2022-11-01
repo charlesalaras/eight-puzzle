@@ -1,6 +1,7 @@
 CC=g++
-DEBUG="-g"
+DEBUG=-g
 TARGET=prog
+CFLAGS=-std=c++14
 
 HEADERS= board.h node.h problem.h queue.h search.h
 OBJECTS= main.o search.o

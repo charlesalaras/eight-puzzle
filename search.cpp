@@ -1,12 +1,14 @@
 #include "search.h"
 
 Queue nodes;
-
+extern bool DEBUG;
 // Helper function to call all operators, and enqueue them if valid (non repeated / possible move)
 std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Node*)>> operators) {
     nodes.expanded += 1;
-    std::cout << "The best state to expand with g(n) = " << node->pathCost << " and " << "h(n) = " << node->heuristic << " is...\n";
-    node->state.print();
+    if(!DEBUG) {
+        std::cout << "The best state to expand with g(n) = " << node->pathCost << " and " << "h(n) = " << node->heuristic << " is...\n";
+        node->state.print();
+    }
     std::vector<Node*> expanded;
     for(auto i: operators) {
         Node* curr = i(node);
