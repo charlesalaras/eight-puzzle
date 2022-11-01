@@ -5,12 +5,14 @@
 #include "board.h"
 #include "node.h"
 
-/* Operators defined in search.cpp */
+// Operators defined in search.cpp
 Node* slideLeft(Node*);
 Node* slideRight(Node*);
 Node* slideUp(Node*);
 Node* slideDown(Node*);
 
+// Contains the attributes that define a search problem.
+// Includes the initial state, list of operators, and an evaluation function that tests if a state is the goal.
 struct Problem {
     Problem(Board state): initialState(state) {}
     Board initialState;

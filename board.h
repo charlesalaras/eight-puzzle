@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 
+// Contains the board state, along with functions for hashing (stringify), and output to command line.
 struct Board {
     std::pair<unsigned int, unsigned int> zeroTile;
     int data[BOARD_DIM][BOARD_DIM] = { { 0 } };

@@ -6,6 +6,9 @@
 #include <vector>
 #include <queue>
 
+// Contains the () operator which acts as a custom comparator function for the Node class
+// This is crucial for the heap properties of our priority queue.
+// It explicitly defines how to break ties and calculate the next chosen node.
 class Compare {
     public:
     bool operator() (const Node* lhs, const Node* rhs) const {
@@ -37,6 +40,7 @@ struct Queue {
     Queue(Node* initial) {
         data.push(initial);
     }
+    // Pops the front node (lowest f(n)), and returns it.
     Node* remove_front() {
         Node* returnData = data.top();
         data.pop();

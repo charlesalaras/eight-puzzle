@@ -7,6 +7,7 @@
 #include "problem.h"
 
 extern Queue nodes;
+// Activates timer & suppresses output when true
 bool DEBUG = false;
 // Defines the search algorithm used
 enum ALGORITHM { UNIFORM, A_STAR_MT, A_STAR_MD };
@@ -38,7 +39,7 @@ void populateBoard(int board[BOARD_DIM][BOARD_DIM]) {
 }
 
 int main (int argc, char* argv[]) {
-
+    // Used to activate timer
     if(argc > 1 && std::string(argv[1]) == "-t") DEBUG = true;
 
     ALGORITHM search = UNIFORM;
@@ -100,6 +101,7 @@ int main (int argc, char* argv[]) {
                 continue;
         }
     }
+    // Problem initialization with created state and chosen algorithm
     Board board(boardData);
     Problem problem(board);
     Node* solution = nullptr;

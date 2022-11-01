@@ -3,6 +3,7 @@
 
 #include "board.h"
 
+// Data structure for the node, includes g(n) and h(n), and the Board state.
 struct Node {
     Node() = default;
     Node(Board state): state(state) {}

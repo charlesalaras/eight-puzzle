@@ -1,7 +1,8 @@
 #include "search.h"
 
 Queue nodes;
-extern bool DEBUG;
+// true when program is called with "-t". Used to suppress output.
+extern bool DEBUG; 
 // Helper function to call all operators, and enqueue them if valid (non repeated / possible move)
 std::vector<Node*> expand(Node* node, std::vector<std::function<Node*(Node*)>> operators) {
     nodes.expanded += 1;
@@ -74,6 +75,7 @@ Queue manhattanDist(Queue& q, std::vector<Node*> expanded) {
                 count++;
                 if(node->state.data[i][j] == 0) continue;
                 if(i == BOARD_DIM - 1 && j == BOARD_DIM - 1) count = 0;
+                // Calculate the true position
                 std::pair<int, int> truePos = {(node->state.data[i][j] - 1) / BOARD_DIM, (node->state.data[i][j] - 1) % BOARD_DIM};
                 if(node->state.data[i][j] != count) {
                     int addedValue = abs(truePos.first - (int)i) + abs(truePos.second - (int)j);
