@@ -11,7 +11,11 @@ class Compare {
     bool operator() (const Node* lhs, const Node* rhs) const {
         int left = lhs->heuristic + lhs->pathCost;
         int right = rhs->heuristic + rhs->pathCost;
-        return left > right;
+        // If same, we should be choosing one with a lower depth
+        if(left == right) {
+            return lhs->pathCost > rhs->pathCost;
+        }
+	return left > right;
     }
 };
 
